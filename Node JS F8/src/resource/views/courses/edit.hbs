@@ -1,0 +1,21 @@
+<div class="row" style="margin-left: 50px;">
+  <div class="col-lg-8">
+   <form method="POST" action="/courses/{{course._id}}?_method=PUT">
+      <h1>Sửa khóa học</h1>
+      <div class="mb-3">
+        <label for="name" class="form-label">Tên khóa học</label>
+        <input type="text" id="name" value="{{course.name}}" placeholder="name" name="name">
+       </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Mô tả khóa học</label>
+        <input type="text" id="description" value="{{course.description}}" placeholder="description" name="description">
+      </div>
+      <div class="mb-3">
+        <label for="videoId" class="form-label">Video ID</label>
+        <input type="text" id="videoId" value="{{course.videoId}}" placeholder="videoId" name="videoId">
+      </div>      
+        
+      <button type="submit">Lưu thay đổi</button>
+   </form>
+  </div>
+</div>

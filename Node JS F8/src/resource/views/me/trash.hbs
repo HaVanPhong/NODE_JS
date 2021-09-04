@@ -1,0 +1,74 @@
+<div class="mt-4">
+  <a href="/me/stored/courses">khóa học của tôi ({{countDocuments}})</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">name</th>
+        <th scope="col">description</th>
+        <th scope="col">videoID</th>
+        <th scope="col">slug</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each courses}}
+      <tr>
+        <th scope="row">{{this.name}}</th>
+        <td>{{this.description}}</td>
+        <td>{{this.videoId}}</td>
+        <td>{{this.slug}}</td>
+        <td>
+          <a href="" id="restore" data-id="{{this._id}}">Phục hồi</a>
+          <a href="" data-bs-toggle="modal" data-bs-target="#delete-course-model" data-bs-id="{{this._id}}">Xóa Vĩnh Viễn</a>
+        </td>
+      </tr>    
+      {{else}}
+      <h1>Thùng rác trống</h1>    
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+{{!-- dialog confirm delete --}}
+<div class="modal fade" id="delete-course-model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure delete that Course</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       This course will deleted forever form database
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="confirmDelete" type="button" type="submit" class="btn btn-danger">Xóa vĩnh viễn</button>
+      </div>
+    </div>
+  </div>
+</div>
+<form name= "form-delete-course" method="POST"></form>
+<form name= "form-restore-course" method="POST"></form>
+<script>
+  var id;
+  var formDelete= document.forms['form-delete-course'];
+  var formRestore= document.forms['form-restore-course'];
+  var exampleModal = document.getElementById('delete-course-model');
+  var btnConfirm = document.getElementById('confirmDelete');
+  exampleModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    id = button.getAttribute('data-bs-id');
+    console.log(id);
+  })
+  btnConfirm.onclick= function(){
+    formDelete.action= '/courses/' + id+ '/force?_method=DELETE';
+    formDelete.submit();
+  }
+
+  var restore= document.getElementById('restore');
+  restore.addEventListener('click', (e)=>{
+    e.preventDefault();
+    formRestore.action='/courses/'+ e.target.getAttribute('data-id') + '/restore?_method=PATCH';
+    formRestore.submit();
+  })
+ 
+</script>

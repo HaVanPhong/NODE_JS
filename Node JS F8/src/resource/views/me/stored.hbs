@@ -1,0 +1,64 @@
+<div class="mt-4">
+  <a href="/me/trash/courses">Thùng rác ({{deletedCount}})</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">name</th>
+        <th scope="col">description</th>
+        <th scope="col">videoID</th>
+        <th scope="col">slug</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each courses}}
+      <tr>
+        <th scope="row">{{this.name}}</th>
+        <td>{{this.description}}</td>
+        <td>{{this.videoId}}</td>
+        <td>{{this.slug}}</td>
+        <td>
+          <a href="/courses/{{this._id}}/edit">Sửa</a>
+          <a href="" data-bs-toggle="modal" data-bs-target="#delete-course-model" data-bs-id="{{this._id}}">Xóa</a>
+        </td>
+      </tr>  
+      {{else}}
+      <h1>Chưa đăng khóa học nào</h1>      
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+{{!-- dialog confirm delete --}}
+<div class="modal fade" id="delete-course-model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure delete that Course</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       This course will deleted form database
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="confirmDelete" type="button" type="submit" class="btn btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+<form name= "form-delete-course" method="POST"></form>
+<script>
+  var id;
+  var formDelete= document.forms['form-delete-course'];
+  var exampleModal = document.getElementById('delete-course-model');
+  var btnConfirm = document.getElementById('confirmDelete');
+  exampleModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    id = button.getAttribute('data-bs-id');
+    console.log(id);
+  })
+  btnConfirm.onclick= function(){
+    formDelete.action= '/courses/' + id+ '?_method=DELETE';
+    formDelete.submit();
+  }
+</script>
