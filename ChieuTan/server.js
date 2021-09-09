@@ -21,11 +21,10 @@ cloudinary.config({
   secure: true,
 });
 
-app.get("/api", function (req, res) {
-  res.json({
-    name: "phòng"
-  })
-});
+
+app.get('/', function(req, res) {
+  res.render('index');
+})
 
 //using formidable
 app.post("/api", function (req, res) {
@@ -39,15 +38,19 @@ app.post("/api", function (req, res) {
   });
 });
 
-//using multer
+//using multer (nên dùng cái này)
 app.post("/multer", upload.single("avt"), async (req, res) => {
   var user = req.body;
+  console.log(req.file);
   await cloudinary.uploader.upload(req.file.path, function (err, result) {
+    if (err){
+      return res.status(500).json({message: err})
+    }
     user.avt = result.secure_url;
   });
   res.json(user);
 });
 
 app.listen(8080, () => {
-  console.log("runned");
+  console.log("runned 8080");
 });
