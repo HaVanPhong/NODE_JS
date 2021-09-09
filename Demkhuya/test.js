@@ -13,6 +13,7 @@ const SECRET_KEY= "fc1331550b7a1cea25b889c2";
 const password= "Phong1234";
 const encode = bcrypt.hashSync(password, 10);
 console.log(encode);
+console.log(encode.length);
 
 var compareBcrypt= bcrypt.compareSync(password, encode);
 console.log(compareBcrypt);
