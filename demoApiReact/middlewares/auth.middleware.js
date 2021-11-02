@@ -8,14 +8,12 @@ module.exports = async function(req, res, next) {
   if (!authorization || !authorization.startsWith('Bearer ')){
     throw createError(401, 'Unauthorized')
   }
-
-  const token = authorization.substring(7)
+  const token = authorization.split(' ')[1]
   const decode = jwt.verify(token, configuration.JWT_SECRET_KEY)
   const user= User.find(value=>value.username=== decode.username);
 
   if (!user){
-    throw createError(404, "Username incorrect")
+    throw createError(404, "token incorrect")
   }
-  req.user = user;
   next();
 }
