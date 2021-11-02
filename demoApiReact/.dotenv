@@ -1,0 +1,2 @@
+JWT_SECRET_KEY: haphong
+SALT_ROUNDS: 10
