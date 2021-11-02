@@ -1,7 +1,8 @@
 const express= require('express');
 const app = express();
 const cors= require('cors');
-const helmet = require('helmet')
+const helmet = require('helmet');
+require('dotenv').config();
 
 const asyncMiddelware= require('./middlewares/async.middleware')
 const authMiddelware = require('./middlewares/auth.middleware')
@@ -24,6 +25,6 @@ app.use((err, req, res, next) => {
   })
 })
 
-app.listen(8080, ()=>{
+app.listen(process.env.PORT || 8080, ()=>{
   console.log("server runed at port 8080");
 })
