@@ -21,6 +21,12 @@ cloudinary.config({
   secure: true,
 });
 
+app.get("/test", function(req, res){
+  res.json({
+    "status": "ok chứ còn gì nữa", 
+    "message": "adu vip"
+  })
+})
 
 app.get('/', function(req, res) {
   res.render('index');

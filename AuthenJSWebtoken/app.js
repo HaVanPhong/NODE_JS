@@ -14,6 +14,7 @@ db.connect();
 
 app.use(express.json());
 
+
 // register
 app.post('/user/register', async (req, res)=>{
   try {
